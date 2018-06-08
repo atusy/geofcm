@@ -4,16 +4,14 @@
 \alias{print.GEOFCM}
 \title{print for GEOFCM}
 \usage{
-\method{print}{GEOFCM}(x, n = 5, plot = TRUE, ...)
+\method{print}{GEOFCM}(x, n = 5, ...)
 }
 \arguments{
 \item{x}{GEOFCM class object}
 
 \item{n}{number of rows to view matrix of membership degrees}
 
-\item{plot}{TRUE or FALSE to plot the result}
-
-\item{...}{other arguments passed to print}
+\item{...}{other arguments passed to plot}
 }
 \description{
 print for GEOFCM

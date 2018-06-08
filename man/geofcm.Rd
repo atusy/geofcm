@@ -4,28 +4,28 @@
 \alias{geofcm}
 \title{GEOFCM based on Yoshida et al. (2018)}
 \usage{
-geofcm(x, coord, C, m = 1.5, q = 1.5, r = 5, scaling = TRUE,
-  iter.max = 100L, th = 1e-05)
+geofcm(x, coord, C, m = 1.5, q = 1.5, r = NULL, preprocess = c("whiten",
+  "scale", NA), iter.max = 100L, th = 1e-05)
 }
 \arguments{
 \item{x}{matrix or data.frame containing observed data other than coordinates}
 
-\item{coord}{matrix or data.frame containing coordinate date}
+\item{coord}{matrix or data.frame containing coordinate data}
 
 \item{C}{number of clusters}
 
-\item{m}{Controls fuzziness based on (default = 1.5)}
+\item{m}{Controls fuzziness basedd on fuzzy c-means (default = 1.5)}
 
 \item{q}{Controls fuzziness based on distance (default = 1.5)}
 
-\item{r}{Distance in km to find neighbors of each data point. (default = 5)}
+\item{r}{Distance in km to find neighbors of each data point. Default value is NULL and use median distance among data points.}
 
-\item{scaling}{TRUE or FALSE to scale x (default = TRUE)}
+\item{preprocess}{Either 'whiten', 'scale', or NA. NA avoids preprocessing.}
 
-\item{maximum}{number of iterations (default = 100L).}
+\item{iter.max}{an integer indicating maximum iteration for clustering  (default = 100L).}
 
-\item{threshold}{to determine convergence (default = 1e-5).}
+\item{th}{a numeric indicating threshold to determine convergence (default = 1e-5).}
 }
 \description{
-GEOFCM based on Yoshida et al. (2018)
+GEOFCM is an extention of spatial fuzzy c-means (sFCM), which is an extention of FCM,
 }

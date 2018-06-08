@@ -3,17 +3,19 @@
 #' GEOFCM is an extention of spatial fuzzy c-means (sFCM), which is an extention of FCM,
 #' 
 #' @param x matrix or data.frame containing observed data other than coordinates
-#' @param coord matrix or data.frame containing coordinate date
+#' @param coord matrix or data.frame containing coordinate data
 #' @param C number of clusters
 #' @param m Controls fuzziness basedd on fuzzy c-means (default = 1.5)
 #' @param q Controls fuzziness based on distance (default = 1.5)
 #' @param r Distance in km to find neighbors of each data point. Default value is NULL and use median distance among data points.
 #' @param preprocess Either 'whiten', 'scale', or NA. NA avoids preprocessing.
-#' @param maximum number of iterations (default = 100L).
-#' @param threshold to determine convergence (default = 1e-5).
+#' @param iter.max an integer indicating maximum iteration for clustering  (default = 100L).
+#' @param th a numeric indicating threshold to determine convergence (default = 1e-5).
 #' 
 #' @importFrom geosphere distm
 #' @importFrom ForeCA whiten
+#' @importFrom stats median
+#' @importFrom stats runif
 #' 
 #' @export
 geofcm <- function(
@@ -85,16 +87,22 @@ geofcm <- function(
     class = c('GEOFCM', 'list')
   )
 }
-
 #' print for GEOFCM
 #' 
 #' @param x GEOFCM class object
 #' @param n number of rows to view matrix of membership degrees
-#' @param plot TRUE or FALSE to plot the result
+# #' @param plot TRUE or FALSE to plot the result
 #' @param ... other arguments passed to plot
+# #' @importFrom graphics plot
+#' @importFrom utils head
+# #' @importFrom colorspace plot
 #' 
 #' @export
-print.GEOFCM <- function(x, n = 5, plot = FALSE, ...) {
+print.GEOFCM <- function(
+  x, n = 5, 
+  # plot = FALSE, 
+  ...
+) {
   cat('hard clusters\n')
   print(x$hard_clusters)
   cat('center of clusters\n')
@@ -113,21 +121,24 @@ print.GEOFCM <- function(x, n = 5, plot = FALSE, ...) {
     'rows of membership matrix\n'
   ))
   print(head(x$membership, n))
-  # cat('\n\n')
-  # if(plot) plot(x, ...)
+  
+  # if(plot) plot(x)
+  
+  invisible(x)
 }
 
-#' plot for GEOFCM
-#' 
-#' @param x GEOFCM class object
-#' @param n number of rows to view matrix of membership degrees
-#' @param ... other arguments passed to print
-#' 
-#' @export
-plot.GEOFCM <- function(x, ...) {
-  plot(
-    prcomp(x$x, center = TRUE, scale = TRUE)$x[, 1:2],
-    col = x$hard_clusters,
-    ...
-  )
-}
+#' #' plot for GEOFCM
+#' #' 
+#' #' @param x GEOFCM class object
+#' #' @param ... other arguments passed to print
+#' #' @importFrom stats prcomp
+#' #' 
+#' #' @export
+#' plot.GEOFCM <- function(x, ...) {
+#'   plot(
+#'     prcomp(x$x, center = TRUE, scale = TRUE)$x[, 1:2],
+#'     col = x$hard_clusters,
+#'     ...
+#'   )
+#'   invisible(x)
+#' }
